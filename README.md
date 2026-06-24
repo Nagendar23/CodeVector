@@ -36,13 +36,13 @@ The system consists of:
 Frontend URL:
 
 ```text
-<frontend-url>
+https://code-vector-lilac.vercel.app/
 ```
 
 Backend URL:
 
 ```text
-<backend-url>
+https://codevector-xdmx.onrender.com/
 ```
 
 ---
