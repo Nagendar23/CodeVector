@@ -9,8 +9,27 @@ export const getProducts = async(req,res)=>{
         ? 20
         : Math.min(Math.max(parsedLimit,1),100);
 
+    const allowedCategories = [
+      "Electronics",
+      "Books",
+      "Clothing",
+      "Sports",
+      "Home",
+      "Beauty",
+      "Toys",
+      "Automotive",
+    ];
+
         let query={};
-        
+        //category filter
+        if(req.query.category){
+            if(!allowedCategories.includes(req.query.category)){
+                return res.status(400).json({message:"Invalid category"})
+            }
+            query.category = req.query.category;
+        }
+
+        // cursor pagination
         if(req.query.cursor){
             try{
                 const decoded = Buffer.from(req.query.cursor, "base64").toString("utf8");
@@ -20,6 +39,7 @@ export const getProducts = async(req,res)=>{
                 const cursorIdObj = new mongoose.Types.ObjectId(cursorData._id);
                 
                 query={
+                    ...query,
                     $or:[
                         {
                             createdAt:{
@@ -50,6 +70,7 @@ export const getProducts = async(req,res)=>{
         .lean();
 
         const hasMore = products.length > limit;
+        
         if(hasMore){
             products.pop();
         }
@@ -77,24 +98,4 @@ export const getProducts = async(req,res)=>{
         console.error("Error while getting products:", error);
         return res.status(500).json({message:"Internal server error"});
     }
-};
-
-        // const products = await Product.find()
-        // .sort({
-        //     createdAt:-1,
-        //     _id:-1,
-        // })
-        // .limit(limit)
-        // .lean()  //instead of mongooose doc instances it returns plain js objects
-
-        // res.status(200).json({
-        //     items:products,
-        //     count:products.length
-        // })
-
-        // console.log(`fetched ${products.length} products`)
-    }catch(error){
-        console.log("Error while getting products ",error)
-        return res.status(500).json({message:"Internal server error"})
-    }
-} 
+}; 
