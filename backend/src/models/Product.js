@@ -1,15 +1,16 @@
 import mongoose from "mongoose";
+import { CATEGORIES } from "../constants/categories.js";
 
-const CATEGORIES = [
-  "Electronics",
-  "Books",
-  "Clothing",
-  "Sports",
-  "Home",
-  "Beauty",
-  "Toys",
-  "Automotive",
-];
+// const CATEGORIES = [
+//   "Electronics",
+//   "Books",
+//   "Clothing",
+//   "Sports",
+//   "Home",
+//   "Beauty",
+//   "Toys",
+//   "Automotive",
+// ];
 
 const productSchema = new mongoose.Schema(
     {
@@ -20,8 +21,8 @@ const productSchema = new mongoose.Schema(
     },
     category:{
         type:String,
-        required:true,
         enum:CATEGORIES,
+        required:true,
     },
     price:{
         type:Number,

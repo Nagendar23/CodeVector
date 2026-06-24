@@ -4,21 +4,12 @@ import {faker} from '@faker-js/faker'
 
 import connectDB from '../src/config/db.js'
 import Product from '../src/models/Product.js'
+import { CATEGORIES } from '../src/constants/categories.js';
 
 dotenv.config()
 
 const TOTAL_PRODUCTS = 200000;
 const BATCH_SIZE = 5000;
-const CATEGORIES = [
-  "Electronics",
-  "Books",
-  "Clothing",
-  "Sports",
-  "Home",
-  "Beauty",
-  "Toys",
-  "Automotive",
-];
 const TWO_YEARS_MS = 1000 * 60 * 60 * 24 * 365 * 2;
 
 function randomDateBetween(start, end) {
